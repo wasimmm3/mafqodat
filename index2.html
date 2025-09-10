@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنفوجرافيك تفاعلي: خدمة "موجود" للمفقودات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Corporate & Trustworthy -->
+    <!-- Application Structure Plan: The infographic uses a narrative, single-scroll structure to tell a compelling story. It starts with a strong hook (the vision), explains the process (How it Works), quantifies the opportunity (Market Potential), visualizes the future (Growth Projections & KPIs), analyzes risks (SWOT), and ends with a clear call to action. This linear flow is ideal for presenting a business case, guiding stakeholders from the "what" to the "why" and "how," ensuring maximum clarity and impact. -->
+    <!-- Visualization & Content Choices: 
+        1. How it Works: Goal(Organize) -> Viz(Numbered timeline/flowchart with icons) -> Method(Structured HTML/CSS using Flexbox) -> Justification(Clearly visualizes the user journey in a sequential, easy-to-follow manner without complex charts). CONFIRMING NO SVG/Mermaid.
+        2. Market Potential: Goal(Inform) -> Viz(Three 'Single Big Number' cards) -> Method(Large, bold text with animated counters) -> Justification(Provides immediate, high-impact insights into the market size and service effectiveness). CONFIRMING NO SVG.
+        3. Subscriber Growth: Goal(Change) -> Viz(Line Chart) -> Method(Chart.js/Canvas) -> Justification(Effectively shows the projected trend of user adoption over time, which is crucial for forecasting). CONFIRMING NO SVG.
+        4. Revenue Mix (Year 3): Goal(Compare) -> Viz(Donut Chart) -> Method(Chart.js/Canvas) -> Justification(Instantly communicates the composition of revenue streams at maturity, highlighting the dual-income model). CONFIRMING NO SVG.
+        5. Target KPIs: Goal(Compare) -> Viz(Radar Chart) -> Method(Chart.js/Canvas) -> Justification(Provides a holistic view of the key performance targets, comparing multiple different metrics on a single, balanced scale). CONFIRMING NO SVG.
+        6. SWOT Analysis: Goal(Organize) -> Viz(Four-quadrant grid) -> Method(Styled HTML/CSS Grid) -> Justification(Presents a classic strategic analysis in a structured, easily digestible format). CONFIRMING NO SVG. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #F8F9FA; }
+        .bg-brand-dark { background-color: #002B49; }
+        .bg-brand-primary { background-color: #005587; }
+        .text-brand-primary { color: #005587; }
+        .text-brand-light { color: #00A3E0; }
+        .border-brand-light { border-color: #00A3E0; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; max-height: 450px; } }
+        .kpi-chart-container { position: relative; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-brand-dark text-white p-8 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-3">خدمة "موجود"</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">الشبكة المجتمعية الأولى في اليمن للإبلاغ عن المفقودات عبر SMS. نحو مجتمع أكثر ترابطاً وأماناً.</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 md:py-16">
+        
+        <section id="how-it-works" class="mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-brand-primary">كيف تعمل الخدمة؟</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">بخطوات بسيطة عبر الرسائل القصيرة، نربط فاقدي المفقودات بمن يجدونها، مع ضمان الأمان والخصوصية الكاملة.</p>
+            <div class="relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-brand-primary opacity-20 transform -translate-y-1/2"></div>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
+                    <div class="flex md:flex-col items-center text-center w-full md:w-1/5 relative">
+                        <div class="bg-brand-primary text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-0 md:mb-4 ml-4 md:ml-0 shadow-lg">1</div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">الاشتراك</h3>
+                            <p class="text-sm text-gray-600">أرسل اسم محافظتك للاشتراك الفوري في شبكة "موجود" المحلية.</p>
+                        </div>
+                    </div>
+                    <div class="flex md:flex-col items-center text-center w-full md:w-1/5 relative">
+                        <div class="bg-brand-primary text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-0 md:mb-4 ml-4 md:ml-0 shadow-lg">2</div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">الإبلاغ</h3>
+                            <p class="text-sm text-gray-600">أرسل "مفقود" وتفاصيل الغرض المفقود لبدء عملية البحث.</p>
+                        </div>
+                    </div>
+                    <div class="flex md:flex-col items-center text-center w-full md:w-1/5 relative">
+                        <div class="bg-brand-primary text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-0 md:mb-4 ml-4 md:ml-0 shadow-lg">3</div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">التحقق والبث</h3>
+                            <p class="text-sm text-gray-600">يراجع فريقنا البلاغ ثم يبثه لآلاف المشتركين في محافظتك.</p>
+                        </div>
+                    </div>
+                    <div class="flex md:flex-col items-center text-center w-full md:w-1/5 relative">
+                        <div class="bg-brand-primary text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-0 md:mb-4 ml-4 md:ml-0 shadow-lg">4</div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">التواصل الآمن</h3>
+                            <p class="text-sm text-gray-600">عند العثور على المفقود، ننسق التواصل بين الطرفين بسرية تامة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="market-potential" class="bg-white p-8 md:p-12 rounded-2xl shadow-xl mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-brand-primary">حجم الفرصة الكامنة في السوق</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="text-5xl md:text-6xl font-extrabold text-brand-light" data-target="15000000">0</div>
+                    <p class="mt-2 text-lg font-semibold">مستخدم محتمل</p>
+                    <p class="text-sm text-gray-600">إجمالي مشتركي الهاتف المحمول في اليمن</p>
+                </div>
+                <div>
+                    <div class="text-5xl md:text-6xl font-extrabold text-brand-light" data-target="95">0%</div>
+                    <p class="mt-2 text-lg font-semibold">وصول فوري ومباشر</p>
+                    <p class="text-sm text-gray-600">نسبة قراءة الرسائل القصيرة خلال 3 دقائق</p>
+                </div>
+                <div>
+                    <div class="text-5xl md:text-6xl font-extrabold text-brand-light" data-target="750000">0</div>
+                    <p class="mt-2 text-lg font-semibold">مشترك متوقع (السنة 1)</p>
+                    <p class="text-sm text-gray-600">بناءً على معدل تبني يقدر بـ 5% فقط</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="growth" class="mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-brand-primary">توقعات النمو والإيرادات</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-xl font-bold text-center mb-1">نمو عدد المشتركين</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">(خلال 3 سنوات)</p>
+                    <div class="chart-container">
+                        <canvas id="subscriberGrowthChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-xl font-bold text-center mb-1">مزيج الإيرادات المتوقع</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">(في السنة الثالثة)</p>
+                    <div class="chart-container">
+                        <canvas id="revenueMixChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kpis" class="mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-brand-primary">مؤشرات الأداء الرئيسية المستهدفة</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-10">نستهدف تحقيق مجموعة متوازنة من مؤشرات الأداء خلال السنة التشغيلية الأولى لضمان نجاح الخدمة على المدى الطويل.</p>
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                 <div class="kpi-chart-container">
+                    <canvas id="kpiChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section id="swot" class="bg-brand-dark text-white p-8 md:p-12 rounded-2xl shadow-xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10">التحليل الاستراتيجي (SWOT)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white/10 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-green-300 mb-3">نقاط القوة</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-200">
+                        <li>سهولة الاستخدام والوصول الشامل</li>
+                        <li>نموذج إيرادات مزدوج ومستدام</li>
+                        <li>المراجعة اليدوية تضمن جودة الخدمة</li>
+                        <li>تعزيز المسؤولية المجتمعية للشركة</li>
+                    </ul>
+                </div>
+                <div class="bg-white/10 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-yellow-300 mb-3">الفرص</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-200">
+                        <li>شراكات استراتيجية مع جهات حكومية وخاصة</li>
+                        <li>التوسع لخدمات بث إعلاني أخرى</li>
+                        <li>إمكانية تطوير تطبيق ذكي مستقبلاً</li>
+                        <li>تحليل البيانات لفهم سلوكيات المجتمع</li>
+                    </ul>
+                </div>
+                <div class="bg-white/10 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-orange-300 mb-3">نقاط الضعف</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-200">
+                        <li>الاعتماد على الكادر البشري للتحقق</li>
+                        <li>تكاليف تشغيلية للموظفين والمنصة</li>
+                        <li>احتمال تأخير بث البلاغات</li>
+                    </ul>
+                </div>
+                <div class="bg-white/10 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-red-300 mb-3">التهديدات</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-200">
+                        <li>تردد المستخدمين في دفع رسوم شهرية</li>
+                        <li>ظهور حلول تقنية منافسة ومجانية</li>
+                        <li>تحديات تنظيمية متعلقة بالخصوصية</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('[data-target]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        let count = 0;
+                        const duration = 2000;
+                        const stepTime = Math.abs(Math.floor(duration / target));
+
+                        const timer = setInterval(() => {
+                            count += Math.ceil(target / (duration / 10));
+                            if (count >= target) {
+                                counter.innerText = target.toLocaleString('ar-EG') + (counter.innerText.includes('%') ? '%' : '');
+                                clearInterval(timer);
+                            } else {
+                                counter.innerText = count.toLocaleString('ar-EG') + (counter.innerText.includes('%') ? '%' : '');
+                            }
+                        }, 10);
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.7 });
+
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        };
+        
+        const wrapLabel = (label) => {
+            if (label.length <= 16) {
+                return label;
+            }
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (let word of words) {
+                if ((currentLine + ' ' + word).trim().length > 16) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        };
+        
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+
+        const createSubscriberGrowthChart = () => {
+            const ctx = document.getElementById('subscriberGrowthChart');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['السنة الأولى', 'السنة الثانية', 'السنة الثالثة'],
+                    datasets: [{
+                        label: 'عدد المشتركين',
+                        data: [750000, 1500000, 2500000],
+                        borderColor: '#005587',
+                        backgroundColor: 'rgba(0, 85, 135, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { callback: (value) => (value / 1000) + ' ألف' } } },
+                    plugins: { tooltip: { callbacks: { title: tooltipTitleCallback } } }
+                }
+            });
+        };
+
+        const createRevenueMixChart = () => {
+            const ctx = document.getElementById('revenueMixChart');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['رسوم الاشتراك الشهري', wrapLabel('إيرادات من رسوم البث')],
+                    datasets: [{
+                        data: [450, 450],
+                        backgroundColor: ['#005587', '#00A3E0'],
+                        borderColor: '#F8F9FA',
+                        borderWidth: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    }
+                }
+            });
+        };
+        
+        const createKpiChart = () => {
+            const ctx = document.getElementById('kpiChart');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        wrapLabel('عدد المشتركين'), 
+                        wrapLabel('معدل المطابقة الناجحة'), 
+                        wrapLabel('رضا المستخدمين'), 
+                        wrapLabel('الإيرادات المحققة'), 
+                        wrapLabel('وقت الاستجابة للبلاغ')
+                    ],
+                    datasets: [{
+                        label: 'الهدف للسنة الأولى (٪ من المستهدف)',
+                        data: [100, 75, 90, 85, 95],
+                        fill: true,
+                        backgroundColor: 'rgba(0, 163, 224, 0.2)',
+                        borderColor: '#00A3E0',
+                        pointBackgroundColor: '#00A3E0',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#00A3E0'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 43, 73, 0.1)' },
+                            grid: { color: 'rgba(0, 43, 73, 0.1)' },
+                            pointLabels: { font: { size: 12, family: 'Tajawal' } },
+                            ticks: { beginAtZero: true, max: 100, stepSize: 25, backdropColor: 'rgba(0,0,0,0)' }
+                        }
+                    },
+                    plugins: { tooltip: { callbacks: { title: tooltipTitleCallback } } }
+                }
+            });
+        };
+
+        animateCounters();
+        createSubscriberGrowthChart();
+        createRevenueMixChart();
+        createKpiChart();
+    });
+    </script>
+</body>
+</html>
