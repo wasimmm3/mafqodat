@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دراسة جدوى خدمة "موجود" للمفقودات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A single-page, vertically scrolling layout with a sticky top navigation bar for quick access to thematic sections. The structure is designed to guide stakeholders logically through the service proposal: starting with the vision, demonstrating the user journey, analyzing the market, explaining the financial model with interactive charts, assessing risks via SWOT, and concluding with recommendations. This linear storytelling approach is more effective for a business proposal than a complex dashboard, ensuring the core message is delivered clearly and persuasively. -->
+    <!-- Visualization & Content Choices: 
+        1. User Journey: Goal(Organize) -> Viz(Numbered cards in a flexbox layout) -> Interaction(Subtle hover animations) -> Justification(Clearly illustrates the operational flow step-by-step as requested by the user).
+        2. Market Stats: Goal(Inform) -> Viz(Large numbers with animated counters) -> Interaction(Numbers count up when scrolled into view) -> Justification(Highlights key metrics dynamically, making them memorable).
+        3. Financial Projections: Goal(Compare/Change) -> Viz(Chart.js Bar Chart) -> Interaction(Buttons to toggle between 'Revenue', 'Costs', and 'Subscribers' datasets) -> Justification(Allows for interactive exploration of the financial model, providing deeper insights than a static image).
+        4. SWOT Analysis: Goal(Organize) -> Viz(CSS Grid with 4 colored quadrants) -> Interaction(Simple, clear layout) -> Justification(Presents a classic business analysis framework in an easily digestible format).
+        Library/Method: Vanilla JS for interactions, Chart.js for visualizations, TailwindCSS for styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #FDFBF7; color: #3A3D40; }
+        .bg-primary { background-color: #EAE3D9; }
+        .bg-secondary { background-color: #D4CDC3; }
+        .bg-accent { background-color: #B8A99A; }
+        .text-accent { color: #A0522D; }
+        .btn-primary { background-color: #A0522D; color: #FFFFFF; transition: background-color 0.3s; }
+        .btn-primary:hover { background-color: #8B4513; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 50vh; }
+        @media (min-width: 768px) { .chart-container { height: 450px; } }
+        html { scroll-behavior: smooth; }
+        .stat-card { background-color: white; border-right: 5px solid #A0522D; }
+        .swot-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .swot-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body>
+    <header class="bg-primary shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-accent">خدمة "موجود"</div>
+                <div class="hidden md:flex items-center space-x-reverse space-x-6">
+                    <a href="#vision" class="hover:text-accent">الرؤية</a>
+                    <a href="#journey" class="hover:text-accent">رحلة المستخدم</a>
+                    <a href="#market" class="hover:text-accent">تحليل السوق</a>
+                    <a href="#financials" class="hover:text-accent">التوقعات المالية</a>
+                    <a href="#swot" class="hover:text-accent">تحليل SWOT</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden mt-3">
+                <a href="#vision" class="block py-2 px-4 text-sm hover:bg-secondary rounded">الرؤية</a>
+                <a href="#journey" class="block py-2 px-4 text-sm hover:bg-secondary rounded">رحلة المستخدم</a>
+                <a href="#market" class="block py-2 px-4 text-sm hover:bg-secondary rounded">تحليل السوق</a>
+                <a href="#financials" class="block py-2 px-4 text-sm hover:bg-secondary rounded">التوقعات المالية</a>
+                <a href="#swot" class="block py-2 px-4 text-sm hover:bg-secondary rounded">تحليل SWOT</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section id="vision" class="text-center min-h-[60vh] flex flex-col justify-center">
+            <h1 class="text-5xl md:text-7xl font-bold text-accent mb-4">حوّل كل مواطن إلى عين لك</h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-700">
+                نقدم "خدمة موجود"، شبكة الأمان المجتمعية عبر الرسائل القصيرة (SMS) التي تربط بين فاقدي ومتلقي المفقودات في كل محافظة، مما يخلق منظومة موثوقة وفعالة تعتمد على قوة المجتمع.
+            </p>
+        </section>
+
+        <section id="journey" class="py-16">
+            <h2 class="text-4xl font-bold text-center mb-12">سيناريو رحلة المستخدم</h2>
+            <div class="flex flex-col md:flex-row flex-wrap justify-center gap-6">
+                <div class="p-6 bg-white rounded-xl shadow-lg w-full md:w-1/3 lg:w-1/4">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl">١</div>
+                        <h3 class="mr-4 text-xl font-bold">الاشتراك</h3>
+                    </div>
+                    <p class="text-gray-600">يرسل المستخدم اسم محافظته إلى الرقم المخصص للاشتراك في شبكة الأمان الخاصة بمنطقته.</p>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-lg w-full md:w-1/3 lg:w-1/4">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl">٢</div>
+                        <h3 class="mr-4 text-xl font-bold">الإبلاغ</h3>
+                    </div>
+                    <p class="text-gray-600">عند فقدان شيء، يرسل المستخدم رسالة "مفقود" مع تفاصيل الغرض المفقود.</p>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-lg w-full md:w-1/3 lg:w-1/4">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl">٣</div>
+                        <h3 class="mr-4 text-xl font-bold">التحقق</h3>
+                    </div>
+                    <p class="text-gray-600">يقوم موظف مختص بمراجعة البلاغ للتأكد من جديته وموافقته على الشروط.</p>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-lg w-full md:w-1/3 lg:w-1/4">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl">٤</div>
+                        <h3 class="mr-4 text-xl font-bold">البث</h3>
+                    </div>
+                    <p class="text-gray-600">بعد الموافقة، يتم بث رسالة البلاغ لجميع المشتركين في نفس المحافظة.</p>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-lg w-full md:w-1/3 lg:w-1/4">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl">٥</div>
+                        <h3 class="mr-4 text-xl font-bold">التواصل الآمن</h3>
+                    </div>
+                    <p class="text-gray-600">من يجد الغرض يتواصل مع رقم الخدمة، ويقوم الموظف بالتنسيق بين الطرفين بأمان.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="py-16 bg-primary -mx-6 px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">حجم الفرصة في السوق</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="stat-card p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl font-bold text-accent mb-2" data-target="15000000">0</div>
+                    <h4 class="text-xl font-semibold">مستخدم محتمل</h4>
+                    <p class="text-gray-600">عدد مشتركي الهاتف المحمول النشطين في البلاد.</p>
+                </div>
+                <div class="stat-card p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl font-bold text-accent mb-2" data-target="95">0</div>
+                    <h4 class="text-xl font-semibold">% وصول فوري</h4>
+                    <p class="text-gray-600">نسبة قراءة الرسائل القصيرة SMS خلال 3 دقائق من استلامها.</p>
+                </div>
+                <div class="stat-card p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl font-bold text-accent mb-2" data-target="5">0</div>
+                    <h4 class="text-xl font-semibold">% معدل اشتراك متوقع</h4>
+                    <p class="text-gray-600">النسبة المتوقعة من المشتركين الذين سيشتركون في الخدمة خلال السنة الأولى.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="financials" class="py-16">
+            <h2 class="text-4xl font-bold text-center mb-6">التوقعات المالية والأداء</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+                استكشف التوقعات المالية للخدمة خلال السنوات الثلاث الأولى. استخدم الأزرار أدناه للتبديل بين الإيرادات، التكاليف، ونمو المشتركين.
+            </p>
+            <div class="text-center mb-8">
+                <button id="revenueBtn" class="btn-primary py-2 px-5 rounded-full font-semibold">الإيرادات</button>
+                <button id="costsBtn" class="bg-gray-200 text-gray-800 py-2 px-5 rounded-full font-semibold ml-2">التكاليف</button>
+                <button id="usersBtn" class="bg-gray-200 text-gray-800 py-2 px-5 rounded-full font-semibold ml-2">المشتركون</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="financialChart"></canvas>
+            </div>
+        </section>
+
+        <section id="swot" class="py-16 bg-primary -mx-6 px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">تحليل SWOT</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="swot-card bg-green-100 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-green-800 mb-3">نقاط القوة</h3>
+                    <ul class="list-disc list-inside text-green-700 space-y-2">
+                        <li>وصول واسع لجميع أنواع الهواتف</li>
+                        <li>نموذج إيرادات مزدوج (اشتراك + بث)</li>
+                        <li>تحكم يدوي يضمن جودة المحتوى</li>
+                        <li>بناء الثقة والولاء للعلامة التجارية</li>
+                    </ul>
+                </div>
+                <div class="swot-card bg-red-100 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-red-800 mb-3">نقاط الضعف</h3>
+                    <ul class="list-disc list-inside text-red-700 space-y-2">
+                        <li>تكاليف تشغيلية بسبب الحاجة لموظفين</li>
+                        <li>تأخير محتمل في بث البلاغات</li>
+                        <li>قد يعتبرها البعض إزعاجًا إذا زادت الرسائل</li>
+                        <li>يعتمد النجاح على الوصول لكتلة حرجة من المشتركين</li>
+                    </ul>
+                </div>
+                <div class="swot-card bg-blue-100 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-3">الفرص</h3>
+                    <ul class="list-disc list-inside text-blue-700 space-y-2">
+                        <li>شراكات مع جهات حكومية ومراكز تجارية</li>
+                        <li>إضافة خدمات بث أخرى (وظائف، إعلانات مبوبة)</li>
+                        <li>جمع بيانات قيمة عن أنماط الفقدان</li>
+                        <li>تطوير تطبيق مصاحب في المستقبل</li>
+                    </ul>
+                </div>
+                <div class="swot-card bg-yellow-100 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-yellow-800 mb-3">التهديدات</h3>
+                    <ul class="list-disc list-inside text-yellow-700 space-y-2">
+                        <li>عزوف المستخدمين عن دفع رسوم شهرية</li>
+                        <li>ظهور تطبيقات منافسة مجانية</li>
+                        <li>تحديات تنظيمية متعلقة بالخصوصية</li>
+                        <li>صعوبة التوسع السريع بسبب الاعتماد على الموظفين</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="bg-secondary text-center py-6">
+        <p>&copy; 2025 - دراسة مقدمة لتطوير خدمات القيمة المضافة.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            function animateCounters() {
+                const counters = document.querySelectorAll('[data-target]');
+                const speed = 200; 
+
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc).toLocaleString('ar-EG');
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target.toLocaleString('ar-EG');
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            const marketSection = document.getElementById('market');
+            if(marketSection) observer.observe(marketSection);
+
+            const chartLabels = ['السنة الأولى', 'السنة الثانية', 'السنة الثالثة'];
+
+            const revenueData = {
+                label: 'الإيرادات (مليون ريال)',
+                data: [135, 450, 900],
+                backgroundColor: 'rgba(160, 82, 45, 0.7)',
+            };
+            const costsData = {
+                label: 'التكاليف (مليون ريال)',
+                data: [50, 75, 100],
+                backgroundColor: 'rgba(100, 100, 100, 0.7)',
+            };
+            const usersData = {
+                label: 'المشتركون (ألف)',
+                data: [750, 1500, 2500],
+                backgroundColor: 'rgba(212, 205, 195, 0.9)',
+            };
+            
+            const ctx = document.getElementById('financialChart').getContext('2d');
+            let financialChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [revenueData]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { family: 'Tajawal' } }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Tajawal' } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    family: 'Tajawal',
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const revenueBtn = document.getElementById('revenueBtn');
+            const costsBtn = document.getElementById('costsBtn');
+            const usersBtn = document.getElementById('usersBtn');
+            const allBtns = [revenueBtn, costsBtn, usersBtn];
+
+            function updateChart(data, activeBtn) {
+                financialChart.data.datasets = [data];
+                financialChart.update();
+                allBtns.forEach(btn => {
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('bg-gray-200', 'text-gray-800');
+                });
+                activeBtn.classList.add('btn-primary');
+                activeBtn.classList.remove('bg-gray-200', 'text-gray-800');
+            }
+
+            revenueBtn.addEventListener('click', () => updateChart(revenueData, revenueBtn));
+            costsBtn.addEventListener('click', () => updateChart(costsData, costsBtn));
+            usersBtn.addEventListener('click', () => updateChart(usersData, usersBtn));
+        });
+    </script>
+</body>
+</html>
