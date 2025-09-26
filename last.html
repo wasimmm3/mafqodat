@@ -137,7 +137,7 @@
             overflow: hidden;
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background-color: #364049; /* Dark background for the dashboard */
+            background-color: #364049; 
             height: 100%;
             min-height: 350px;
         }
@@ -192,6 +192,7 @@
         </header>
 
         <main>
+            <!-- 1. تعريف الخدمة، الرؤية، والهدف -->
             <section id="definition" class="mb-16 bg-white p-8 rounded-xl shadow-md">
                 <h2 class="text-3xl font-bold text-[#2196F3] mb-8 border-r-4 border-[#2196F3] pr-4 text-right">1. تعريف الخدمة، الرؤية، والهدف</h2>
                 
@@ -223,7 +224,8 @@
                 </div>
             </section>
             
-            <section id="importance" class="mb-16">
+            <!-- 2. الأهمية والفائدة المرجوة (للمستخدم والمجتمع) -->
+             <section id="importance" class="mb-16">
                  <h2 class="text-3xl font-bold text-center text-[#2196F3] mb-8 border-b-4 border-dashed pb-4">2. الأهمية والفائدة المرجوة (للمستخدم والمجتمع)</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     
@@ -265,6 +267,7 @@
                 </div>
             </section>
             
+            <!-- 3. لشركة الاتصالات والدولة (الجانب التجاري) -->
             <section id="commercial-value" class="mb-16 bg-blue-50 p-8 rounded-xl shadow-md border-r-8 border-[#2196F3]">
                 <h2 class="text-3xl font-bold text-[#2196F3] mb-8 pr-4 text-right">3. لشركة الاتصالات والدولة (الجانب التجاري)</h2>
                 
@@ -291,6 +294,7 @@
                 </div>
             </section>
             
+            <!-- 4. آلية عمل الخدمة (رحلة المستخدم) -->
             <section id="mechanism" class="mb-16">
                 <h2 class="text-3xl font-bold text-center text-[#2196F3] mb-10 border-r-4 border-[#2196F3] pr-4 text-right">4. آلية عمل الخدمة (رحلة المستخدم)</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
@@ -298,12 +302,12 @@
                     <div class="flowchart-step">
                         <div class="flowchart-icon" style="color:#2196F3;">📱</div>
                         <h3 class="lg font-bold text-gray-800">1. الاشتراك</h3>
-                        <p class="text-sm text-gray-500">يرسل المستخدم اسم محافظته أو كلمة <span style="font-weight: bold;">"جميع"</span> إلى الرقم المخصص للانضمام لشبكة المفقودات.</p>
+                        <p class="text-sm text-gray-500">يرسل المستخدم اسم محافظته أو كلمة <span style="font-weight: bold;">"جميع"</span> للاشتراك في كل المحافظات إلى الرقم المخصص.</p>
                     </div>
                      <div class="flowchart-step">
                         <div class="flowchart-icon" style="color:#FFC107;">📝</div>
                         <h3 class="lg font-bold text-gray-800">2. الإبلاغ</h3>
-                        <p class="text-sm text-gray-500">يرسل المشترك رسالة <span style="font-weight: bold;">"مفقود"</span> متبوعة بتفاصيل الغرض المفقود ومكان فقدانه.</p>
+                        <p class="text-sm text-gray-500">عند فقدان شيء، يرسل المشترك <span style="font-weight: bold;">"مفقود"</span> متبوعة بتفاصيل المفقود ومكان فقدانه.</p>
                     </div>
                     <div class="flowchart-step flowchart-step-ai">
                         <div class="flowchart-icon" style="color:#4CAF50;">🔍</div>
@@ -328,11 +332,13 @@
                 </div>
             </section>
             
+            <!-- 5. جاهزية النظام والتوقعات (مع صور حية) -->
             <section id="readiness-and-forecast" class="mb-16 bg-white p-8 rounded-xl shadow-lg border-r-8 border-[#2196F3]">
                 <h2 class="text-3xl font-bold text-[#2196F3] mb-8 pr-4 text-right">5. جاهزية النظام والتوقعات (إثبات بصري للواجهة)</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     
+                    <!-- العمود الأيمن: النقاط النصية -->
                     <div>
                         <h3 class="2xl font-bold text-gray-800 mb-4 border-b pb-2">النظام جاهز للإطلاق الفوري</h3>
                         <ul class="list-disc pr-5 space-y-3 text-gray-700 text-right">
@@ -342,27 +348,33 @@
                             <li><span style="font-weight: bold;">نموذج تسعير مدروس:</span> تشغيل الخدمة على MT و MO، مع:
                                 <ul class="list-circle pr-5 space-y-1 mt-1 font-semibold text-[#2196F3]">
                                     <li>اشتراك شهري رمزي: 150 ريال.</li>
-                                    <li>تكلفة بث البلاغ (MO): <span style="font-weight: bold; color: #F44336;">5 ريال</span>. (تم التعديل بناءً على طلبك)</li>
+                                    <li>تكلفة بث البلاغ (MO): <span style="font-weight: bold; color: #F44336;">5 ريال</span>.</li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     
+                    <!-- العمود الأيسر: صور لوحة التحكم (Carousel) -->
                     <div class="carousel-container">
                         <div id="imageContainer" class="w-full h-full">
-                            </div>
+                            <!-- Slides will be injected here by JavaScript -->
+                        </div>
                         <div id="carouselIndicators" class="carousel-indicators">
-                            </div>
+                            <!-- Indicators will be injected here by JavaScript -->
+                        </div>
                     </div>
                 </div>
             </section>
             
+            <!-- 6. القيمة المضافة للذكاء الاصطناعي (Gemini API) -->
             <section id="ai-value" class="mb-16 bg-green-50 p-8 rounded-xl shadow-lg border-r-8 border-[#4CAF50]">
                 <h2 class="text-3xl font-bold text-[#4CAF50] mb-8 pr-4 text-right">6. القيمة المضافة للذكاء الاصطناعي (Gemini API)</h2>
                 <p class="text-gray-700 mb-8 text-right">دمج الذكاء الاصطناعي ينقل خدمة "مفقوداتي" من خدمة تقليدية إلى منصة <span style="font-weight: bold;">ذكية عالية الكفاءة</span> وقابلة للتوسع.</p>
                 
+                <!-- المقارنة بين الطريقتين -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
                     
+                    <!-- الطريقة التقليدية -->
                     <div class="comparison-card traditional p-6 border-t-4 border-[#F44336] shadow-xl">
                         <h4 class="text-xl font-bold text-[#F44336] mb-4 flex items-center">
                             <span class="icon ml-2">🕰️</span> الطريقة التقليدية (بدون ذكاء اصطناعي)
@@ -376,7 +388,8 @@
                         </ul>
                     </div>
                     
-                    <div class="comparison-card traditional p-6 border-t-4 border-[#4CAF50] shadow-xl">
+                    <!-- الطريقة المعززة بالذكاء الاصطناعي -->
+                     <div class="comparison-card traditional p-6 border-t-4 border-[#4CAF50] shadow-xl">
                         <h4 class="text-xl font-bold text-[#4CAF50] mb-4 flex items-center">
                             <span class="icon ml-2">✨</span> الطريقة المعززة بالـ Gemini AI
                         </h4>
@@ -390,6 +403,7 @@
                     </div>
                 </div>
 
+                <!-- مخطط توفير التكاليف -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
                     <div class="md:col-span-1 p-4">
                         <h3 class="2xl font-bold text-gray-800 mb-4 border-b pb-2 text-center">مخطط توفير التكاليف (بفضل الذكاء الاصطناعي)</h3>
@@ -399,7 +413,8 @@
                          <p class="text-center text-sm text-gray-600 mt-2">يوضح المخطط أن التحليل الذكي يقلل من حاجة الموظفين لمراجعة البلاغات بشكل يدوي، مما يوفر 40% من التكاليف التشغيلية.</p>
                     </div>
                     
-                     <div class="md:col-span-1 p-6 rounded-xl shadow-2xl border border-blue-400 ai-demo-container">
+                     <!-- مركز الذكاء الاصطناعي التفاعلي -->
+                    <div class="md:col-span-1 p-6 rounded-xl shadow-2xl border border-blue-400 ai-demo-container">
                         <h3 class="text-3xl font-bold text-[#2196F3] mb-2 text-center">مركز الذكاء الاصطناعي التفاعلي (دليل عملي)</h3>
                         <p class="text-md text-gray-700 mb-6 text-center">تجربة حية لكيفية استخدام محرك Gemini في تسريع العمليات التشغيلية والتجارية.</p>
                         
@@ -477,7 +492,6 @@
 
     <script>
         
-        // Define the image sources for the carousel (from user's uploaded screenshots)
         const dashboardImages = [
             "Screenshot from 2025-09-26 21-57-26.jpg",
             "Screenshot from 2025-09-26 21-59-09.png"
@@ -489,7 +503,7 @@
             const imageContainer = document.getElementById('imageContainer');
             const indicatorsContainer = document.getElementById('carouselIndicators');
 
-            if (!imageContainer || !indicatorsContainer) return; // Exit if elements are not found
+            if (!imageContainer || !indicatorsContainer) return; 
 
             // 1. Inject Slides and Indicators
             dashboardImages.forEach((src, index) => {
@@ -538,7 +552,7 @@
 
             // 3. Start Auto-Play
             clearInterval(carouselInterval);
-            carouselInterval = setInterval(nextImage, 4000); // Change image every 4 seconds
+            carouselInterval = setInterval(nextImage, 4000); 
             
             // Initial call
             showImage(currentImageIndex);
@@ -547,44 +561,47 @@
         
         const initializeCharts = () => {
              // Chart for Cost Savings
-            const costCtx = document.getElementById('costChart').getContext('2d');
-            const costChart = new Chart(costCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['تكاليف المراجعة اليدوية', 'التكاليف الموفرة بفضل الـ AI'],
-                    datasets: [{
-                        data: [60, 40],
-                        backgroundColor: ['#F44336', '#4CAF50'],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                             callbacks: {
-                                title: function(tooltipItems) {
-                                    const item = tooltipItems[0];
-                                    let label = item.chart.data.labels[item.dataIndex];
-                                    if (Array.isArray(label)) {
-                                      return label.join(' ');
-                                    } else {
-                                      return label;
+            const costChartElement = document.getElementById('costChart');
+            if (costChartElement) {
+                const costCtx = costChartElement.getContext('2d');
+                const costChart = new Chart(costCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['تكاليف المراجعة اليدوية', 'التكاليف الموفرة بفضل الـ AI'],
+                        datasets: [{
+                            data: [60, 40],
+                            backgroundColor: ['#F44336', '#4CAF50'],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                 callbacks: {
+                                    title: function(tooltipItems) {
+                                        const item = tooltipItems[0];
+                                        let label = item.chart.data.labels[item.dataIndex];
+                                        if (Array.isArray(label)) {
+                                          return label.join(' ');
+                                        } else {
+                                          return label;
+                                        }
+                                    },
+                                    label: function(context) {
+                                        return context.label + ': ' + context.raw + '%';
                                     }
-                                },
-                                label: function(context) {
-                                    return context.label + ': ' + context.raw + '%';
                                 }
                             }
                         }
                     }
-                }
-            });
-            
+                });
+            }
+
             // Show analysis tab by default
              showTab('analysis');
              
@@ -611,9 +628,6 @@
         };
 
         const callGeminiApi = async (payload) => {
-            // NOTE: The API key and URL are placeholders in this environment.
-            // In a real implementation, you would need a valid API key and a mechanism
-            // to handle backend communication securely.
             const apiKey = ""; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             
@@ -693,12 +707,6 @@
             };
 
             try {
-                // NOTE: The actual Gemini API call will fail in this environment
-                // since there is no valid API key or server-side proxy.
-                // We provide a mock response for demonstration purposes here:
-                
-                // const result = await callGeminiApi(payload);
-                // const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
                 
                 // --- Mock Data for Successful Demo ---
                 const mockJson = {
@@ -773,11 +781,6 @@
             };
 
             try {
-                // NOTE: The actual Gemini API call will fail in this environment
-                // We provide a mock response for demonstration purposes here:
-                
-                // const result = await callGeminiApi(payload);
-                // const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
                 
                 // --- Mock Data for Successful Demo (Expansion) ---
                 const mockJson = {
