@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض تقديمي لخدمة "مفقوداتي"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .flowchart-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease-in-out;
+        }
+        .flowchart-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .flowchart-icon {
+            font-size: 3rem;
+            line-height: 1;
+            margin-bottom: 1rem;
+            color: #1976D2;
+        }
+        .flowchart-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            color: #64B5F6;
+        }
+        .flowchart-connector::after {
+            content: '◄';
+            font-size: 2.5rem;
+        }
+        @media (max-width: 768px) {
+            .flowchart-connector {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            border-left: 5px solid #2196F3;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12 py-8 bg-white rounded-xl shadow-lg border border-gray-200">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#0D47A1]">خدمة "مفقوداتي"</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600">شبكة مجتمعية مبتكرة عبر الرسائل القصيرة (SMS) لإعادة المفقودات لأصحابها</p>
+        </header>
+
+        <main>
+            <section id="definition" class="mb-16">
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-[#1976D2] mb-4 border-r-4 border-[#1976D2] pr-4">1. تعريف الخدمة</h2>
+                    <p class="text-gray-700 leading-relaxed text-lg">
+                        "مفقوداتي" هي خدمة وطنية تعتمد على الرسائل القصيرة (SMS) لإنشاء شبكة تفاعلية وآمنة بين أفراد المجتمع. تتيح الخدمة للمشتركين الإبلاغ عن مقتنياتهم المفقودة، ويتم بث هذه البلاغات بشكل فوري ومستهدف إلى جميع المشتركين الآخرين داخل نفس النطاق الجغرافي (المحافظة) أو على مستوى جميع المحافظات، مما يزيد بشكل كبير من فرصة العثور عليها وإعادتها لأصحابها بأسرع وقت ممكن وبكل سهولة وأمان.
+                    </p>
+                </div>
+            </section>
+
+            <section id="importance" class="mb-16">
+                 <h2 class="text-3xl font-bold text-center text-[#1976D2] mb-8">2. الأهمية والفائدة المرجوة</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="kpi-card">
+                        <div class="text-5xl mb-3">🤝</div>
+                        <h3 class="text-xl font-bold text-[#0D47A1] mb-2">تعزيز الثقة المجتمعية</h3>
+                        <p class="text-gray-600">بناء شبكة من التعاون والمساعدة المتبادلة بين أفراد المجتمع، مما ينمي الشعور بالأمان والمسؤولية المشتركة.</p>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="text-5xl mb-3">🚀</div>
+                        <h3 class="text-xl font-bold text-[#0D47A1] mb-2">سرعة وفعالية عالية</h3>
+                        <p class="text-gray-600">الوصول الفوري لآلاف المشتركين في منطقة الفقدان يزيد من احتمالية العثور على المفقودات خلال ساعات قليلة.</p>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="text-5xl mb-3">🛡️</div>
+                        <h3 class="text-xl font-bold text-[#0D47A1] mb-2">أمان وحفظ الخصوصية</h3>
+                        <p class="text-gray-600">يتم التواصل عبر وسيط من الشركة، مما يضمن عدم الكشف عن أرقام هواتف الأطراف المعنية ويحمي خصوصيتهم.</p>
+                    </div>
+                     <div class="kpi-card">
+                        <div class="text-5xl mb-3">🌍</div>
+                        <h3 class="text-xl font-bold text-[#0D47A1] mb-2">تغطية جغرافية واسعة</h3>
+                        <p class="text-gray-600">إمكانية الاشتراك في محافظة محددة أو في جميع المحافظات لتوسيع نطاق البحث والبلاغات.</p>
+                    </div>
+                     <div class="kpi-card">
+                        <div class="text-5xl mb-3">📈</div>
+                        <h3 class="text-xl font-bold text-[#0D47A1] mb-2">خدمة ذات قيمة مضافة</h3>
+                        <p class="text-gray-600">تقديم خدمة مبتكرة تلبي حاجة حقيقية لدى العملاء، مما يعزز من مكانة شركة الاتصالات كمزود لخدمات نوعية.</p>
+                    </div>
+                     <div class="kpi-card">
+                        <div class="text-5xl mb-3">💡</div>
+                        <h3 class="text-xl font-bold text-[#0D47A1] mb-2">سهولة الاستخدام</h3>
+                        <p class="text-gray-600">لا تتطلب هواتف ذكية أو إنترنت، فقط عبر الرسائل القصيرة المتاحة لجميع شرائح المجتمع.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mechanism" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-[#1976D2] mb-10">3. آلية عمل الخدمة (رحلة المستخدم)</h2>
+                <div class="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-0">
+
+                    <div class="flowchart-step w-full md:w-1/5">
+                        <div class="flowchart-icon">📱</div>
+                        <h3 class="text-lg font-bold text-[#0D47A1]">1. الاشتراك</h3>
+                        <p class="text-sm text-gray-500">يرسل المستخدم اسم محافظته (مثال: "صنعاء") أو كلمة "جميع" للاشتراك في كل المحافظات إلى الرقم المخصص.</p>
+                    </div>
+
+                    <div class="flowchart-connector"></div>
+
+                    <div class="flowchart-step w-full md:w-1/5">
+                        <div class="flowchart-icon">📝</div>
+                        <h3 class="text-lg font-bold text-[#0D47A1]">2. الإبلاغ</h3>
+                        <p class="text-sm text-gray-500">عند فقدان شيء، يرسل المشترك "مفقود" متبوعة بتفاصيل المفقود ومكان فقدانه.</p>
+                    </div>
+
+                    <div class="flowchart-connector"></div>
+
+                    <div class="flowchart-step w-full md:w-1/5">
+                        <div class="flowchart-icon">🔍</div>
+                        <h3 class="text-lg font-bold text-[#0D47A1]">3. المراجعة والبث</h3>
+                        <p class="text-sm text-gray-500">يقوم موظف بمراجعة البلاغ للتأكد من مطابقته للشروط، ثم الموافقة على بثه لجميع المشتركين في النطاق المحدد.</p>
+                    </div>
+
+                    <div class="flowchart-connector"></div>
+
+                    <div class="flowchart-step w-full md:w-1/5">
+                        <div class="flowchart-icon">📥</div>
+                        <h3 class="text-lg font-bold text-[#0D47A1]">4. الاستلام</h3>
+                        <p class="text-sm text-gray-500">يستقبل المشتركون رسالة البلاغ. إذا كان المشترك مشتركاً في "جميع" المحافظات، ستتضمن الرسالة اسم المحافظة التي فُقد فيها الغرض.</p>
+                    </div>
+
+                    <div class="flowchart-connector"></div>
+
+                    <div class="flowchart-step w-full md:w-1/5">
+                        <div class="flowchart-icon">📞</div>
+                        <h3 class="text-lg font-bold text-[#0D47A1]">5. التواصل الآمن</h3>
+                        <p class="text-sm text-gray-500">عند العثور على المفقود، يتم التواصل مع رقم الخدمة، ويقوم الموظف بتنسيق عملية التسليم بأمان وسرية تامة.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="readiness" class="mb-16">
+                 <h2 class="text-3xl font-bold text-center text-[#1976D2] mb-8">4. جاهزية النظام والتوقعات</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-[#0D47A1] mb-4">النظام جاهز للإطلاق</h3>
+                        <ul class="list-disc pr-5 space-y-3 text-gray-700">
+                           <li><span class="font-semibold">منصة تقنية متكاملة:</span> لإدارة الاشتراكات، استقبال البلاغات، وتنفيذ عمليات البث.</li>
+                           <li><span class="font-semibold">لوحة تحكم للموظفين:</span> لمراجعة البلاغات والموافقة عليها بسهولة وكفاءة.</li>
+                           <li><span class="font-semibold">قاعدة بيانات آمنة:</span> لحماية بيانات المشتركين وضمان خصوصيتهم.</li>
+                           <li><span class="font-semibold">نموذج تسعير مدروس:</span>
+                               <ul class="pr-4 mt-2">
+                                   <li>- اشتراك شهري رمزي: 150 ريال.</li>
+                                   <li>- تكلفة بث البلاغ: 100 ريال.</li>
+                               </ul>
+                           </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl text-center font-bold text-[#0D47A1] mb-4">توقعات نمو المشتركين (6 أشهر الأولى)</h3>
+                        <div class="chart-container">
+                            <canvas id="subscribersChart"></canvas>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-600">نثق بأن خدمة "مفقوداتي" ستمثل إضافة نوعية ومبتكرة لخدمات الاتصالات، ونتطلع إلى موافقتكم الكريمة لإطلاقها وخدمة المجتمع.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const ctx = document.getElementById('subscribersChart').getContext('2d');
+        const subscribersChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['الشهر 1', 'الشهر 2', 'الشهر 3', 'الشهر 4', 'الشهر 5', 'الشهر 6'],
+                datasets: [{
+                    label: 'عدد المشتركين المتوقع',
+                    data: [15000, 35000, 60000, 90000, 130000, 180000],
+                    backgroundColor: '#2196F3',
+                    borderColor: '#0D47A1',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value / 1000 + ' ألف';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
