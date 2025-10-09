@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaskAPI - بروشور تسويقي متكامل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /*
+        Palette: Dark Blue/Tech Green/Vibrant Orange (Inspired by Brilliant Blues/Energetic & Playful for contrast)
+        Primary: #0f172a (Slate 900) - Background
+        Secondary: #374151 (Gray 700) - Card/Accent Background
+        Tech Green Accent: #10b981 (Emerald 500) - Used for security/innovation
+        Vibrant Orange Accent: #fb923c (Orange 400) - Used for speed/CTA
+        */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #0f172a;
+        }
+        .section-title {
+            @apply text-3xl md:text-5xl font-black text-center mb-4;
+        }
+        .section-subtitle {
+            @apply text-lg md:text-xl text-center text-gray-400 max-w-4xl mx-auto mb-12;
+        }
+        .card {
+            @apply bg-gray-800 bg-opacity-70 p-6 rounded-xl shadow-2xl transition-all duration-300 border-t-4 border-transparent hover:border-[#fb923c];
+        }
+        .cta-button {
+            @apply bg-gradient-to-r from-[#10b981] to-[#fb923c] text-white font-extrabold py-4 px-10 rounded-xl text-xl shadow-lg hover:shadow-xl hover:opacity-95 transition-all duration-300;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .architecture-node {
+            @apply p-4 rounded-lg font-bold text-sm md:text-base shadow-lg transition-transform duration-300 hover:scale-105;
+        }
+        .arrow-right {
+            content: "→";
+            @apply text-4xl text-[#fb923c] font-light mx-2;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- 1. الغلاف الأمامي (Front Cover) -->
+    <header id="cover" class="py-24 md:py-32 bg-gray-900 text-center relative overflow-hidden">
+        <!-- Background element for visual flair (Tech Gradient) -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-color-blue-500),_var(--tw-color-emerald-400))]"></div>
+        
+        <div class="relative z-10">
+            <div class="inline-block p-4 rounded-full bg-gray-700 shadow-xl mb-6">
+                <!-- Visual Icon: Speed + Security + AI -->
+                <span class="text-6xl text-[#fb923c]">⚡</span>
+                <span class="text-6xl text-[#10b981]">🔒</span>
+                <span class="text-6xl text-blue-400">🧠</span>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-[#10b981] to-[#fb923c] mb-6">
+                MaskAPI
+            </h1>
+            <h2 class="text-2xl md:text-4xl font-bold text-gray-200">
+                وسيط التكامل الذكي المدعوم بالذكاء الاصطناعي
+            </h2>
+            
+            <p class="text-2xl md:text-3xl mt-12 max-w-4xl mx-auto p-4 bg-gray-800 rounded-xl shadow-inner border-b-4 border-[#fb923c]">
+                "حوّل أفكارك إلى واجهات API جاهزة للإنتاج **في ثوانٍ**، دون بنية تحتية أو خبرة خلفية."
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+
+        <!-- 2. المشكلة (The Pain) -->
+        <section id="problem" class="my-20">
+            <h2 class="section-title text-[#fb923c]">لماذا تحتاج الشركات والمطورون إلى MaskAPI؟</h2>
+            <p class="section-subtitle">يواجه التطوير التقليدي تحديات جوهرية تعيق السرعة وتزيد التكاليف والمخاطر. هذه هي المعضلة التي تحلها MaskAPI.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12 text-center">
+                <div class="card border-[#fb923c]">
+                    <span class="text-5xl mb-3 block">⏳</span>
+                    <h3 class="text-2xl font-bold mb-2">الوقت الضائع</h3>
+                    <p class="text-gray-400">بناء واجهات API يستغرق أسابيع من الإعداد اليدوي والاختبار المعقد.</p>
+                </div>
+                <div class="card border-[#fb923c]">
+                    <span class="text-5xl mb-3 block">💸</span>
+                    <h3 class="text-2xl font-bold mb-2">التكلفة العالية (CapEx)</h3>
+                    <p class="text-gray-400">تطوير وربط الأنظمة داخليًا يستهلك ميزانيات رأسمالية ضخمة.</p>
+                </div>
+                <div class="card border-[#fb923c]">
+                    <span class="text-5xl mb-3 block">🔄</span>
+                    <h3 class="text-2xl font-bold mb-2">التعقيد التشغيلي</h3>
+                    <p class="text-gray-400">إدارة الأخطاء، ورموز HTTP، وإعادة المحاولة تتطلب تدخلاً يدويًا مستمرًا.</p>
+                </div>
+                <div class="card border-[#fb923c]">
+                    <span class="text-5xl mb-3 block">🔓</span>
+                    <h3 class="text-2xl font-bold mb-2">مخاطر الأمان</h3>
+                    <p class="text-gray-400">التعامل المباشر مع بيانات حساسة يزيد احتمالية الاختراق وفشل الامتثال.</p>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-center mt-16 text-[#10b981]">مقارنة الأداء والوقت (المخطط البياني المقترح)</h3>
+            <div class="chart-container mt-8">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </section>
+
+        <!-- 3. الحل (The Solution) – MaskAPI: طبقة عزل ذكية + منصة موحّدة -->
+        <section id="solution" class="my-20">
+            <h2 class="section-title text-[#10b981]">MaskAPI: طبقة العزل الذكية ومنصة التكامل الموحدة</h2>
+            <p class="section-subtitle">MaskAPI ليست مجرد وسيط، بل هي جدار حماية ذكي يقع بين أنظمتك وبين العالم الخارجي، يضمن الأمان والسرعة المطلوبة.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+                
+                <!-- Architectural Diagram (Structured HTML/CSS) -->
+                <div class="card p-8 border-[#10b981]">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-[#fb923c]">الرسم المعماري المبسّط</h3>
+                    <div class="flex flex-col items-center space-y-4">
+                        
+                        <!-- Client Systems -->
+                        <div class="architecture-node bg-blue-700 text-white w-full">
+                            أنظمة العميل (Front-end Apps)
+                        </div>
+
+                        <!-- Arrow 1 -->
+                        <div class="arrow-right transform rotate-90 !mx-0 !my-2">↓</div>
+                        
+                        <!-- MaskAPI Layer (The Barrier) -->
+                        <div class="w-full p-6 bg-gradient-to-r from-[#10b981] to-blue-500 rounded-xl shadow-2xl text-center text-gray-900 font-extrabold text-2xl border-4 border-white">
+                            طبقة MaskAPI الذكية 🤖
+                        </div>
+                        <p class="text-sm text-gray-300 text-center mt-2">(API Gateway, Caching, DDM, JWT)</p>
+
+                        <!-- Arrow 2 -->
+                        <div class="arrow-right transform rotate-90 !mx-0 !my-2">↓</div>
+
+                        <!-- Backend Systems -->
+                        <div class="grid grid-cols-2 gap-4 w-full">
+                             <div class="architecture-node bg-gray-700 text-white">
+                                أنظمة طرف ثالث (بوابات الدفع)
+                            </div>
+                            <div class="architecture-node bg-gray-700 text-white">
+                                أنظمتك الداخلية (Legacy/CRM)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution Benefits List -->
+                <div class="card p-8 border-[#10b981]">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-[#10b981]">مكونات الحل الرئيسية</h3>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start">
+                            <span class="text-2xl text-[#fb923c] ml-3 flex-shrink-0">🌀</span>
+                            <div>
+                                <strong class="text-white">وسيط موحّد (API Gateway):</strong> نقطة تحكم مركزية لتبسيط ومراقبة كل تدفقات البيانات.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-2xl text-[#10b981] ml-3 flex-shrink-0">🎭</span>
+                            <div>
+                                <strong class="text-white">إخفاء البيانات الديناميكي (DDM):</strong> حماية البيانات الحساسة (PII) عبر إخفاء ذكي في كل المعاملات.
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-2xl text-blue-400 ml-3 flex-shrink-0">⚡</span>
+                            <div>
+                                <strong class="text-white">التخزين المؤقت بالذكاء الاصطناعي:</strong> تسريع استجابات API وتقليل الضغط على أنظمتك الخلفية.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-2xl text-gray-400 ml-3 flex-shrink-0">🔑</span>
+                            <div>
+                                <strong class="text-white">المصادقة المدمجة (JWT):</strong> إدارة تسجيل الدخول والخروج وتجديد الرموز بكفاءة وسهولة.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. القيمة المضافة (ROI) -->
+        <section id="roi" class="my-20 text-center">
+            <h2 class="section-title text-blue-400">قيمة عائد الاستثمار (ROI): التوفير والأمان</h2>
+            <p class="section-subtitle">MaskAPI تحول التحديات التشغيلية إلى مزايا تنافسية واضحة وملموسة.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                
+                <div class="card border-blue-400">
+                    <span class="text-5xl mb-3 block text-[#10b981]">✅</span>
+                    <h3 class="text-2xl font-bold mb-2">تقليل المخاطر والامتثال</h3>
+                    <p class="text-gray-400">تضمن الامتثال لـ PCI DSS و GDPR وغيرها، وتقلل مسؤوليتك القانونية تجاه حماية البيانات.</p>
+                </div>
+                
+                <div class="card border-blue-400">
+                    <span class="text-5xl mb-3 block text-[#fb923c]">💰</span>
+                    <h3 class="text-2xl font-bold mb-2">تحسين الأداء المالي</h3>
+                    <p class="text-gray-400">تحويل التكلفة من رأسمالية (CapEx) إلى تشغيلية مرنة (OpEx)، مما يسهل الميزانية والتخطيط.</p>
+                </div>
+                
+                <div class="card border-blue-400">
+                    <span class="text-5xl mb-3 block text-blue-400">🚀</span>
+                    <h3 class="text-2xl font-bold mb-2">تسريع الوصول للسوق</h3>
+                    <p class="text-gray-400">يطلق المطورون المنتجات أسرع بكثير، ويركزون على الميزات الأساسية بدلاً من إدارة البنية التحتية.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. المميزات الرئيسية (Features) - Grid of Icons -->
+        <section id="features" class="my-20">
+            <h2 class="section-title text-[#10b981]">كل ما تحتاجه في منصة واحدة</h2>
+            <p class="section-subtitle">ميزات مبتكرة ومدمجة تجعل MaskAPI منصة التطوير السريعة والأكثر أماناً.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+                <div class="card p-5">
+                    <span class="text-4xl block mb-2 text-blue-400">🧠</span>
+                    <h3 class="text-xl font-bold mb-1">تطوير بالذكاء الاصطناعي</h3>
+                    <p class="text-sm text-gray-400">كتابة المتطلبات → توليد كود API جاهز للتشغيل.</p>
+                </div>
+                <div class="card p-5">
+                    <span class="text-4xl block mb-2 text-[#fb923c]">🖼️</span>
+                    <h3 class="text-xl font-bold mb-1">منشئ الاستجابات المرئي</h3>
+                    <p class="text-sm text-gray-400">تخصيص استجابات API باستخدام واجهة مرئية، بلا كود.</p>
+                </div>
+                <div class="card p-5">
+                    <span class="text-4xl block mb-2 text-[#10b981]">🧪</span>
+                    <h3 class="text-xl font-bold mb-1">بيئة اختبار متكاملة</h3>
+                    <p class="text-sm text-gray-400">اختبر وجرّب واجهة API قبل إطلاقها مباشرة.</p>
+                </div>
+                <div class="card p-5">
+                    <span class="text-4xl block mb-2 text-gray-400">🔑</span>
+                    <h3 class="text-xl font-bold mb-1">مصادقة JWT مرنة</h3>
+                    <p class="text-sm text-gray-400">إدارة آمنة لرموز المصادقة وتجديدها تلقائيًا.</p>
+                </div>
+                <div class="card p-5">
+                    <span class="text-4xl block mb-2 text-[#10b981]">🖥️</span>
+                    <h3 class="text-xl font-bold mb-1">نسخة استضافة ذاتية (On-Premise)</h3>
+                    <p class="text-sm text-gray-400">مرونة للشركات التي تتطلب استضافة داخلية للامتثال.</p>
+                </div>
+                <div class="card p-5">
+                    <span class="text-4xl block mb-2 text-blue-400">📊</span>
+                    <h3 class="text-xl font-bold mb-1">سجلات وتقارير تشغيلية</h3>
+                    <p class="text-sm text-gray-400">مراقبة كاملة وأرشفة لكل العمليات والمعاملات.</p>
+                </div>
+                <div class="card p-5 col-span-1 md:col-span-2 lg:col-span-2">
+                    <span class="text-4xl block mb-2 text-[#fb923c]">🌐</span>
+                    <h3 class="text-xl font-bold mb-1">تكامل شامل في مكان واحد</h3>
+                    <p class="text-sm text-gray-400">وداعاً لتشتت الأدوات. كل ما تحتاجه لإدارة الـ API متوفر هنا.</p>
+                </div>
+            </div>
+        </section>
+
+         <!-- AI Ideas Section (Retained for Gemini API demonstration) -->
+        <section id="ai-ideas" class="my-24">
+            <h2 class="section-title text-[#fb923c]">✨ أطلق العنان لإمكانيات واجهات الـ API بالذكاء الاصطناعي</h2>
+            <p class="section-subtitle">أدخل مجال عملك أو فكرة مشروعك، ودع الذكاء الاصطناعي يقترح عليك 5 أفكار مبتكرة لوجهات برمجة جاهزة للتطبيق على MaskAPI.</p>
+            <div class="max-w-3xl mx-auto card space-y-4 bg-gray-900 border-2 border-dashed border-blue-400">
+                <input type="text" id="apiTopic" placeholder="مثل: التجارة الإلكترونية، الخدمات المالية، تطبيقات الصحة، الألعاب" class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-[#fb923c] focus:border-[#fb923c]" />
+                <button onclick="generateIdeas()" id="generateButton" class="w-full bg-gradient-to-r from-[#10b981] to-[#fb923c] text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity duration-300 flex items-center justify-center">
+                    توليد الأفكار الآن ✨
+                </button>
+                <div id="ideasResult" class="mt-4 p-4 bg-gray-700 rounded-lg hidden">
+                    <p class="text-center text-gray-400" id="loadingIndicator">جاري توليد الأفكار...</p>
+                    <ul id="ideasList" class="list-disc pr-6 space-y-3 mt-4 text-right">
+                        <!-- Ideas will be inserted here -->
+                    </ul>
+                </div>
+                <div id="errorResult" class="mt-4 p-3 bg-red-800 text-white rounded-lg hidden">
+                    حدث خطأ: تعذر توليد الأفكار حالياً. يرجى المحاولة مرة أخرى.
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- 6. الدعوة للعمل (CTA) -->
+    <footer id="cta" class="text-center py-16 bg-gray-900 border-t-4 border-[#10b981]">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">MaskAPI: أمان لا مثيل له، تعقيد صفري، سرعة فائقة.</h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10">هل أنت مستعد لإطلاق حلولك البرمجية بأسرع وأسلم طريقة ممكنة؟</p>
+        
+        <a href="https://maskapi.dev/" target="_blank" rel="noopener noreferrer" class="cta-button">
+            🔵 ابدأ نسختك التجريبية الآن – مجانًا
+        </a>
+
+        <div class="mt-12 text-gray-400 space-y-2">
+            <p class="text-lg font-medium">🌐 maskapi.dev</p>
+            <p class="text-lg font-medium">📧 contact@maskapi.dev</p>
+        </div>
+        
+        <p class="mt-8 text-gray-500 text-sm">MaskAPI &copy; 2025</p>
+    </footer>
+
+    <script>
+        const API_MODEL = "gemini-2.5-flash-preview-05-20";
+        const API_URL = (apiKey) => `https://generativelanguage.googleapis.com/v1beta/models/${API_MODEL}:generateContent?key=${apiKey}`;
+        const apiKey = "";
+
+        // Function for exponential backoff for API calls
+        async function exponentialBackoffFetch(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.status !== 429 && response.ok) {
+                        return response;
+                    }
+                    if (response.status === 429 && i < maxRetries - 1) {
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+                    throw new Error(`API call failed with status: ${response.status}`);
+                } catch (error) {
+                    if (i === maxRetries - 1) {
+                        throw error;
+                    }
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    // FIX: Changed from 'await new Promise(resolve, delay));' to correct syntax for waiting with setTimeout
+                    await new Promise(resolve => setTimeout(resolve, delay)); 
+                }
+            }
+            throw new Error("Exceeded maximum retries.");
+        }
+
+        async function generateIdeas() {
+            const topicInput = document.getElementById('apiTopic');
+            const resultDiv = document.getElementById('ideasResult');
+            const ideasList = document.getElementById('ideasList');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorDiv = document.getElementById('errorResult');
+            const generateButton = document.getElementById('generateButton');
+            const topic = topicInput.value.trim();
+
+            if (!topic) {
+                // IMPORTANT: Avoid using alert() in favor of custom UI
+                const message = 'الرجاء إدخال مجال عمل أو فكرة.';
+                const placeholderAlert = document.createElement('div');
+                placeholderAlert.className = 'fixed top-4 right-4 bg-yellow-600 text-white p-3 rounded-lg shadow-xl z-50';
+                placeholderAlert.textContent = message;
+                document.body.appendChild(placeholderAlert);
+                setTimeout(() => placeholderAlert.remove(), 3000);
+                return;
+            }
+
+            resultDiv.classList.remove('hidden');
+            loadingIndicator.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            ideasList.innerHTML = '';
+            generateButton.disabled = true;
+            generateButton.innerHTML = 'جاري التوليد...';
+
+            const userQuery = `اقترح 5 أفكار مبتكرة لوجهات برمجة (APIs) يمكن تطبيقها بسرعة وأمان باستخدام منصة MaskAPI في مجال: ${topic}. يجب أن يكون لكل فكرة عنوان ووصف موجز.`;
+            
+            const systemPrompt = "أنت خبير في تطوير الأنظمة والذكاء الاصطناعي. مهمتك هي توليد أفكار APIs، مع التأكيد على السرعة والكفاءة، وتقديمها بتنسيق JSON. اجعل الأوصاف مختصرة وموجهة للمطورين.";
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                "title": { "type": "STRING", "description": "عنوان الفكرة" },
+                                "description": { "type": "STRING", "description": "وصف موجز للفكرة" }
+                            },
+                            "propertyOrdering": ["title", "description"]
+                        }
+                    }
+                }
+            };
+
+            try {
+                const response = await exponentialBackoffFetch(API_URL(apiKey), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                    const jsonText = result.candidates[0].content.parts[0].text;
+                    const ideas = JSON.parse(jsonText);
+                    
+                    ideasList.innerHTML = ideas.map(idea => 
+                        `<li class="border-b border-gray-600 pb-2 last:border-b-0">
+                            <strong class="text-[#fb923c]">${idea.title}:</strong> ${idea.description}
+                        </li>`
+                    ).join('');
+                } else {
+                    errorDiv.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                errorDiv.classList.remove('hidden');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+                generateButton.disabled = false;
+                generateButton.innerHTML = 'توليد الأفكار الآن ✨';
+            }
+        }
+
+        // --- Chart.js Initialization ---
+        const ctx = document.getElementById('comparisonChart');
+
+        const processLabel = (label) => {
+            if (label.length <= 16) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > 16) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        };
+        
+        const labels = ['بناء API تقليدي', 'اختبار وإعداد الأمان', 'التكامل مع بوابة دفع خارجية'].map(processLabel);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'أيام العمل بالطريقة التقليدية',
+                    data: [15, 10, 20],
+                    backgroundColor: 'rgba(251, 146, 60, 0.8)', /* Orange 400 */
+                    borderColor: '#fb923c',
+                    borderWidth: 1
+                }, {
+                    label: 'أيام العمل مع MaskAPI',
+                    data: [0.1, 0.5, 1],
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)', /* Emerald 500 */
+                    borderColor: '#10b981',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'المدة المقدرة (بالأيام)',
+                            color: '#ffffff'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#ffffff',
+                            maxRotation: 0,
+                            minRotation: 0
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
