@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaskAPI: وسيط التكامل الذكي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Premium Dark (Dark Gray #121212, Light Text #F0F4F8, Gold Accent #FBBF24) -->
+    <!-- Application Structure Plan: The application maintains a single-page, vertically scrolling narrative (Problem-Agitate-Solve) but now uses a Premium Dark Theme derived from the source images. It starts with the powerful new headline (Hero), presents the problem and solution, highlights the CRITICAL security benefit in a dedicated section (Security), allows deep exploration of the expanded technical features via the master-detail grid (Features), visualizes business benefits with dynamic charts (ROI), and concludes with a clear call to action. This dark, focused structure enhances the perceived value and sophistication of the product. -->
+    <!-- Visualization & Content Choices: 
+        - Page 1 Info (New Headline/Value Prop) -> Goal: Inform -> Presentation: Large typography, Dark/Gold theme -> Interaction: Static, high impact -> Justification: Matches the high-quality dark mockup and delivers the core promise immediately.
+        - Page 2 Info (The Pain) -> Goal: Compare -> Viz: Grouped Bar Chart (Chart.js) -> Interaction: Hover tooltips (Updated colors for dark mode) -> Justification: Clearly contrasts the legacy pain points with the MaskAPI solution.
+        - Page 2 Info (The Solution) -> Goal: Organize/Process -> Viz: HTML/CSS Flexbox diagram (Updated colors for dark mode) -> Interaction: Static visual flow -> Justification: Provides a clear architectural context for the next sections.
+        - Page 3 Info (Privacy/Security) -> Goal: Inform/Assure -> Presentation: Dedicated section with icon and strong copy (from image_b3baf9.png) -> Interaction: Static, strong focus -> Justification: Elevates the critical security message found in the source material.
+        - Page 4 Info (Expanded Features) -> Goal: Organize/Inform -> Presentation: Interactive Grid + Text Area (Updated content from images) -> Interaction: Clicking a feature card updates the details -> Justification: This pattern efficiently handles the newly expanded list of developer-centric features.
+        - Page 5 Info (ROI) -> Goal: Compare/Show Composition -> Viz: Stacked Bar & Donut Chart (Chart.js, Updated colors) -> Interaction: Animated on scroll, hover tooltips -> Justification: Visualizes the financial and compliance benefits effectively in the new dark environment. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #F0F4F8; /* Light text */
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .section {
+            min-height: 80vh;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            border-bottom: 1px solid #333; /* Darker separator */
+        }
+        .feature-card {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: #1E1E1E; /* Dark card background */
+            color: #F0F4F8;
+            border: 1px solid #333;
+        }
+        .feature-card.active, .feature-card:hover {
+            transform: translateY(-5px);
+            background-color: #FBBF24; /* Gold Accent */
+            color: #121212;
+            box-shadow: 0 10px 15px -3px rgb(251 191 36 / 0.2), 0 4px 6px -4px rgb(251 191 36 / 0.1);
+        }
+        .flow-diagram-box {
+            border: 2px solid #FBBF24; /* Gold border */
+            background-color: #1E1E1E;
+            color: #F0F4F8;
+            box-shadow: 0 4px 6px -1px rgb(251 191 36 / 0.1), 0 2px 4px -2px rgb(251 191 36 / 0.05);
+        }
+        /* Custom styles for the keyhole icon, ensuring no SVG */
+        .keyhole-icon {
+            display: inline-block;
+            position: relative;
+            width: 60px;
+            height: 80px;
+            border: 6px solid #FBBF24;
+            border-radius: 50% 50% 0 0;
+            border-bottom: none;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .keyhole-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 30px;
+            background: #FBBF24;
+            border-radius: 2px;
+        }
+        .keyhole-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            width: 20px;
+            height: 20px;
+            background: #121212;
+            border: 6px solid #FBBF24;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="container mx-auto px-4">
+
+        <section id="hero" class="section flex flex-col items-center justify-center text-center">
+            <div class="product-hunt mb-6">
+                <span class="text-sm font-semibold text-orange-400 border border-orange-400 px-3 py-1 rounded-full">منتج اليوم على Product Hunt 🔥</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 text-white">
+                بناء واجهات API واختبارها وإطلاقها في <strong class="text-yellow-400">ثوانٍ، لا أسابيع</strong>
+            </h1>
+            <p class="max-w-4xl text-xl text-slate-400 mb-12">
+                منصة مدعومة بالذكاء الاصطناعي تتيح للمطورين إنشاء واجهات API جاهزة للإنتاج من أي مصدر بيانات دون إعداد خلفي أو إدارة بنية تحتية — **كل ذلك في واجهة بسيطة واحدة.**
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button class="bg-yellow-500 text-slate-900 font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-400 transition-transform hover:scale-105">
+                    ابدأ مجانًا - لا يتطلب بطاقة ائتمانية
+                </button>
+                <button class="border border-slate-600 text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-slate-800 transition-colors">
+                    جدولة عرض تجريبي
+                </button>
+            </div>
+        </section>
+
+        <section id="problem-solution" class="section">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white">من التعقيد إلى البساطة</h2>
+                <p class="text-xl text-slate-400 mt-3">شاهد الفرق الذي يحدثه MaskAPI في تكاليف ووقت التكامل.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-zinc-900 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-red-500 mb-2">التحديات التقليدية</h3>
+                    <ul class="space-y-3 text-lg text-slate-300">
+                        <li>⏳ <strong>وقت ضائع:</strong> أسابيع من الترميز المخصص لكل خدمة (أطر عمل معقدة).</li>
+                        <li>💸 <strong>تكلفة رأسمالية (CapEx):</strong> استثمارات ضخمة في البنية التحتية والخوادم.</li>
+                        <li>🔓 <strong>مخاطر أمان:</strong> تعرض مباشر للبيانات الحساسة (PII) ونطاق امتثال واسع.</li>
+                    </ul>
+                    <div class="mt-8">
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-zinc-800 text-white p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4">الحل مع MaskAPI: الوسيط الذكي</h3>
+                    <p class="text-lg text-slate-400 mb-8">يعمل MaskAPI كطبقة مركزية ذكية تعزل التعقيد وتوفر واجهة موحدة وآمنة لجميع خدماتك الخلفية، مما يسمح بالنشر السريع والموثوق.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between text-center font-bold text-sm md:text-base space-y-6 md:space-y-0">
+                        <div class="flow-diagram-box p-4 rounded-lg">أنظمة العميل/الواجهة الأمامية</div>
+                        <div class="text-4xl text-yellow-500 mx-4 hidden md:block">➡️</div>
+                        <div class="text-4xl text-yellow-500 my-2 md:hidden">⬇️</div>
+                        <div class="border-4 border-yellow-500 bg-zinc-900 p-4 rounded-lg scale-110">
+                            <h4 class="text-xl font-black text-yellow-400">MaskAPI</h4>
+                            <p class="font-normal text-slate-300">وسيط موحد وذكي</p>
+                        </div>
+                        <div class="text-4xl text-yellow-500 mx-4 hidden md:block">➡️</div>
+                        <div class="text-4xl text-yellow-500 my-2 md:hidden">⬇️</div>
+                        <div class="flow-diagram-box p-4 rounded-lg">
+                            <p>خدمات الدفع</p>
+                            <p>CRM، خدمات طرف ثالث...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="security" class="section flex flex-col items-center justify-center text-center">
+            <div class="keyhole-icon"></div>
+            <h2 class="text-5xl md:text-6xl font-black text-white mb-4">
+                مصمم للخصوصية والأمان
+            </h2>
+            <p class="max-w-3xl text-xl text-slate-400 mb-10">
+                جميع تفاعلات API مشفرة بالكامل عبر SSL، مما يضمن بقاء بياناتك الحساسة خاصة ومحمية في جميع الأوقات. MaskAPI يعزل بيانات PII ويقلل من نطاق الامتثال الخاص بك بشكل جذري.
+            </p>
+        </section>
+
+        <section id="features" class="section">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white">كل ما يحتاجه المطورون في منصة واحدة</h2>
+                <p class="text-xl text-slate-400 mt-3">أدوات قوية لزيادة الإنتاجية وتقليل الجهد، مع التركيز على المنطق بدلاً من الإعداد.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1">
+                    <div id="features-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
+                    </div>
+                </div>
+                <div class="lg:col-span-2 bg-zinc-900 p-8 rounded-2xl shadow-xl min-h-[300px] border border-zinc-700">
+                    <div id="feature-details">
+                        <h3 id="feature-title" class="text-3xl font-bold text-yellow-400 mb-4"></h3>
+                        <p id="feature-description" class="text-lg text-slate-300"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roi" class="section">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white">عائد استثمار مباشر ومخاطر صفرية</h2>
+                <p class="text-xl text-slate-400 mt-3">قيمة تجارية حقيقية تهم أصحاب القرار وتدفع النمو المستدام.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-zinc-900 p-8 rounded-2xl shadow-xl border border-zinc-700">
+                    <h3 class="text-2xl font-bold text-center mb-4 text-yellow-400">💰 خفض التكاليف: من CapEx إلى OpEx</h3>
+                    <p class="text-center text-slate-400 mb-6">تحويل الاستثمار الرأسمالي الثقيل إلى تكلفة تشغيلية مرنة يمكن التنبؤ بها (نموذج الاشتراك).</p>
+                    <div class="chart-container">
+                        <canvas id="costModelChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 p-8 rounded-2xl shadow-xl border border-zinc-700">
+                    <h3 class="text-2xl font-bold text-center mb-4 text-yellow-400">✅ تقليل المخاطر والامتثال</h3>
+                    <p class="text-center text-slate-400 mb-6">تقليص نطاق الامتثال الأمني (مثل PCI DSS) بشكل كبير عبر عزل البيانات الحساسة.</p>
+                    <div class="chart-container">
+                        <canvas id="complianceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="cta" class="section text-center border-b-0">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">جاهز لتسريع ابتكاراتك؟</h2>
+            <p class="max-w-3xl mx-auto text-xl text-slate-400 mb-8">انضم إلى الشركات الرائدة التي تستخدم قوة الذكاء الاصطناعي لتبسيط تكاملها.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-yellow-500 text-slate-900 font-bold text-xl py-4 px-12 rounded-lg shadow-lg hover:bg-yellow-400 transition-transform hover:scale-105">
+                    ابدأ الآن – مجانًا
+                </button>
+            </div>
+            <div class="mt-12 pt-8 border-t border-zinc-700 flex justify-center items-center space-x-8 rtl:space-x-reverse text-slate-500">
+                <span>🌐 maskapi.dev</span>
+                <span>📧 contact@maskapi.dev</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+
+            const globalChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { font: { family: "'Tajawal', sans-serif", size: 14 }, color: '#94A3B8' } /* Light gray labels */
+                    },
+                    tooltip: {
+                        enabled: true,
+                        titleFont: { family: "'Tajawal', sans-serif", size: 16 },
+                        bodyFont: { family: "'Tajawal', sans-serif", size: 14 },
+                        callbacks: { title: tooltipTitleCallback },
+                        backgroundColor: '#FBBF24', /* Gold background */
+                        titleColor: '#121212', /* Dark text */
+                        bodyColor: '#1E293B',
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { font: { family: "'Tajawal', sans-serif", size: 12 }, color: '#CBD5E1' }, /* Light ticks */
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: { font: { family: "'Tajawal', sans-serif", size: 12 }, color: '#CBD5E1' }, /* Light ticks */
+                        grid: { color: '#333' } /* Dark grid lines */
+                    }
+                }
+            };
+            
+            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['الوقت (بالأسابيع)', 'التكلفة (بالآلاف)', 'المخاطر (نسبة الامتثال)'],
+                    datasets: [{
+                        label: 'التكامل التقليدي',
+                        data: [4, 100, 85],
+                        backgroundColor: 'rgba(239, 68, 68, 0.8)', /* Red */
+                        borderRadius: 5,
+                    }, {
+                        label: 'مع MaskAPI',
+                        data: [0.1, 5, 10],
+                        backgroundColor: 'rgba(251, 191, 36, 0.9)', /* Gold */
+                        borderRadius: 5,
+                    }]
+                },
+                options: globalChartOptions
+            });
+
+            const costModelCtx = document.getElementById('costModelChart').getContext('2d');
+            new Chart(costModelCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['النموذج التقليدي', 'نموذج MaskAPI'],
+                    datasets: [{
+                        label: 'تكلفة رأسمالية (CapEx)',
+                        data: [85, 5],
+                        backgroundColor: 'rgba(239, 68, 68, 0.8)', /* Red */
+                    }, {
+                        label: 'تكلفة تشغيلية (OpEx)',
+                        data: [15, 95],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)', /* Blue */
+                    }]
+                },
+                options: { ...globalChartOptions, scales: { x: { stacked: true, ticks: globalChartOptions.scales.x.ticks }, y: { stacked: true, ticks: globalChartOptions.scales.y.ticks, grid: globalChartOptions.scales.y.grid } } }
+            });
+
+            const complianceCtx = document.getElementById('complianceChart').getContext('2d');
+            new Chart(complianceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['نطاق الامتثال المتبقي', 'نطاق الامتثال الذي تم تقليصه بواسطة MaskAPI'],
+                    datasets: [{
+                        data: [15, 85],
+                        backgroundColor: ['rgba(239, 68, 68, 0.8)', 'rgba(251, 191, 36, 0.9)'], /* Red & Gold */
+                        borderColor: '#121212',
+                        borderWidth: 5,
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: globalChartOptions.plugins.legend.labels },
+                        tooltip: globalChartOptions.plugins.tooltip
+                    }
+                }
+            });
+
+            const features = [
+                { id: 'ai', icon: '🧠', title: 'تطوير بالذكاء الاصطناعي', description: 'توليد كود API تلقائيًا بناءً على المخططات المطلوبة، مما يقلل وقت التطوير بشكل كبير ويمكّن فريقك من التركيز على منطق الأعمال الأساسي.' },
+                { id: 'nocode', icon: '🖼️', title: 'منشئ استجابات No-Code', description: 'بناء هياكل استجابات API المعقدة بسهولة عبر واجهة سحب وإفلات، دون كتابة سطر واحد من الكود.' },
+                { id: 'all_tools', icon: '🛠️', title: 'جميع الأدوات في مكان واحد', description: 'تطوير، اختبار، ونشر واجهات API دون التنقل بين التطبيقات أو الأدوات، مما يزيد الكفاءة بشكل كبير.' },
+                { id: 'scaling', icon: '📈', title: 'توسع بسيط وتلقائي', description: 'لا داعي للقلق بشأن الخوادم؛ يتوسع API تلقائيًا للتعامل مع أي زيادة في عدد المستخدمين أو الطلبات دون أي تدخل يدوي.' },
+                { id: 'no_framework', icon: '🚫', title: 'لا حاجة للأطر المعقدة', description: 'ركز على المنطق الأساسي الذي يهم عملك، وتجنب ضياع الوقت في تعلم أطر العمل المملة أو القوالب الجاهزة.' },
+                { id: 'one_click_deploy', icon: '🚀', title: 'نشر سهل بنقرة واحدة', description: 'انشر واجهة API الخاصة بك بسرعة إلى السحابة دون الحاجة إلى عمل DevOps معقد أو إدارة البنية التحتية.' },
+                { id: 'online', icon: '♾️', title: 'الأنظمة متصلة دائمًا', description: 'صفر توقف (Zero Downtime) يضمن توفر أنظمتك وحلولك دائمًا للمستخدمين، حتى أثناء التحديثات الكبرى.' },
+                { id: 'customizable', icon: '✍️', title: 'قابلية التخصيص الكامل', description: 'يمكنك بسهولة تكييف وتعديل طلبات واستجابات API لتناسب متطلبات عملك الفريدة دون قيود.' }
+            ];
+
+            const featuresGrid = document.getElementById('features-grid');
+            const featureTitle = document.getElementById('feature-title');
+            const featureDescription = document.getElementById('feature-description');
+
+            features.forEach(feature => {
+                const card = document.createElement('div');
+                card.className = 'feature-card p-4 rounded-xl shadow text-center';
+                card.dataset.id = feature.id;
+                card.innerHTML = `<div class="text-4xl mb-2">${feature.icon}</div><h4 class="font-bold">${feature.title}</h4>`;
+                featuresGrid.appendChild(card);
+            });
+
+            const featureCards = document.querySelectorAll('.feature-card');
+            
+            function updateFeatureDetails(featureId) {
+                const feature = features.find(f => f.id === featureId);
+                featureTitle.textContent = feature.title;
+                featureDescription.textContent = feature.description;
+                
+                featureCards.forEach(card => {
+                    card.classList.toggle('active', card.dataset.id === featureId);
+                });
+            }
+
+            featuresGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.feature-card');
+                if (card) {
+                    updateFeatureDetails(card.dataset.id);
+                }
+            });
+
+            updateFeatureDetails('ai');
+        });
+    </script>
+</body>
+</html>
